@@ -50,10 +50,10 @@ BEGIN
     DECLARE result VARCHAR(30) DEFAULT "2";
     DECLARE num INT DEFAULT 2;
 	WHILE num < 10 DO
-		SET num = num + 2;
-        SET result = CONCAT(result, ",", num);
-    END WHILE;
-	RETURN result;
+	    SET num = num + 2;
+            SET result = CONCAT(result, ",", num);
+    	END WHILE;
+    RETURN result;
 END //
 DELIMITER ;
 
