@@ -1,0 +1,130 @@
+-- 1
+/*
+Создание таблицы sales
+
+Создать таблицу sales с тремя столбцами: id, order_date (дата заказа) и count_product (количество продуктов в заказе). Затем заполнить эту таблицу данными, включая информацию о дате заказа и количестве продуктов в каждом заказе.
+Названия столбцов: order_date, count_product. Заполните ее данными.
+___________________
+|'2022-01-01' |156|
+-------------------
+|'2022-01-02' |180|
+-------------------
+|'2022-01-03' |21 |
+-------------------
+|'2022-01-04' |124|
+-------------------
+|'2022-01-05' |341|
+-------------------
+*/
+
+CREATE TABLE itresume9100403.sales (
+  -- id INT PRIMARY KEY AUTO_INCREMENT,
+  order_date DATE NOT NULL,
+  count_product INT NOT NULL);
+
+INSERT INTO itresume9100403.sales (order_date, count_product)
+
+VALUES
+('2022-01-01', 156),
+('2022-01-02', 180),
+('2022-01-03', 21),
+('2022-01-04', 124),
+('2022-01-05', 341);
+
+SELECT * FROM itresume9100403.sales;
+
+
+-- 2
+/*
+Тип заказа в sales
+
+Для данных таблицы sales укажите тип заказа в зависимости от кол-ва :
+
+меньше 100 - Маленький заказ,
+от 100 до 300 - Средний заказ,
+больше 300 - Большой заказ.
+Выведите таблицу с названиями столбцов Номер заказа, Количество продукта, Тип
+*/
+
+SELECT 
+id AS "Номер заказа",
+count_product AS "Количество продукта",
+CASE
+WHEN count_product < 100 THEN "Маленький заказ"
+WHEN count_product < 300 THEN "Средний заказ"
+ELSE "Большой заказ"
+END AS "Тип"
+FROM sales;
+
+-- 3
+/*
+Создание таблицы orders
+
+Используя операторы языка SQL, создайте таблицу orders, заполните ее значениями.
+Названия столбцов: employee_id, amount, order_status.
+______________________________
+|'e03' |'15.00'  |'OPEN'     |
+------------------------------
+|'e01' |'25.50'  |'OPEN'     |
+------------------------------
+|'e05' |'100.70' |'CLOSED'   |
+------------------------------
+|'e02' |'22.18'  |'OPEN'     |
+------------------------------
+|'e04' |'9.50'   |'CANCELLED'|
+------------------------------
+*/
+
+CREATE TABLE itresume9100403.orders (
+  employee_id VARCHAR(10) NOT NULL,
+  amount VARCHAR(10) NOT NULL,
+  order_status VARCHAR(10) NOT NULL);
+  
+INSERT INTO itresume9100403.orders (employee_id, amount, order_status)
+VALUES
+('e03', '15.00', 'OPEN'),
+('e01', '25.50', 'OPEN'),
+('e05', '100.70', 'CLOSED'),
+('e02', '22.18', 'OPEN'),
+('e04', '9.50', 'CANCELLED');
+
+SELECT * FROM itresume9100403.orders;
+
+-- 4
+/*
+Вывод подробного описания статуса
+
+Выбрать данные из таблицы orders и вывести столбцы id, employee_id, amount, и order_status с дополнительным столбцом full_order_status, который содержит описание статуса заказа на основе значения столбца 'order_status'.
+______________________________________________
+|id	|mobile_phones_id	|order_status|
+----------------------------------------------
+|1	|1			|OPEN        |
+----------------------------------------------
+|2	|1			|OPEN        |
+----------------------------------------------
+|3	|1			|CLOSED      |
+----------------------------------------------
+|4	|4			|OPEN        |
+----------------------------------------------
+|5	|4			|CANCELLED   |
+----------------------------------------------
+
+OPEN – «Order is in open state» ;
+CLOSED - «Order is closed»;
+CANCELLED - «Order is cancelled» 
+*в остальных случаях выведите «Not mentioned»
+*/
+
+SELECT 
+id, employee_id, amount, order_status,
+CASE
+WHEN order_status = 'OPEN' THEN "Order is in open state"
+WHEN order_status = 'CLOSED' THEN "Order is closed"
+WHEN order_status = 'CANCELLED' THEN "Order is cancelled"
+ELSE "Not mentioned"
+END AS 'full_order_status'
+FROM orders;
+
+
+
+

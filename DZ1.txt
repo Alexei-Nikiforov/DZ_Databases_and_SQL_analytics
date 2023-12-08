@@ -1,0 +1,94 @@
+-- 1
+/*
+—оздание сущности с мобильными телефонами
+
+—оздайте таблицу (сущность) с мобильными телефонами mobile_phones. ѕри создании необходимо использовать DDL-команды.
+ѕеречень полей (атрибутов):
+id Ц числовой тип, автоинкремент, первичный ключ;
+product_name Ц строковый тип, об€зательный к заполнению;
+manufacturer Ц строковый тип, об€зательный к заполнению;
+product_count Ц числовой тип, беззнаковый;
+price Ц числовой тип, беззнаковый.
+»спользу€ CRUD-операцию INSERT, наполните сущность mobile_phones данными:
+_______________________________________________________
+|product_name	|manufacturer	|product_count	|price|
+-------------------------------------------------------
+|iPhone X	|Apple		|156		|76000|
+-------------------------------------------------------
+|iPhone 8	|Apple		|180		|51000|
+-------------------------------------------------------
+|Galaxy S9	|Samsung	|21		|56000|
+-------------------------------------------------------
+|Galaxy S8	|Samsung	|124		|41000|
+-------------------------------------------------------
+|P20 Pro	|Huawei		|341		|36000|
+-------------------------------------------------------
+*/
+
+CREATE TABLE itresume9100403.mobile_phones (
+  product_name VARCHAR(45) NOT NULL,
+  manufacturer VARCHAR(45) NOT NULL,
+  product_count INT NULL,
+  price INT NOT NULL);
+  
+INSERT INTO itresume9100403.mobile_phones 
+  (product_name, manufacturer, product_count, price) 
+VALUES 
+  ('iPhone X', 'Apple', 3, 76000);
+
+INSERT INTO itresume9100403.mobile_phones 
+  (product_name, manufacturer, product_count, price) 
+VALUES 
+  ('iPhone 8', 'Apple', 2, 51000);
+
+INSERT INTO itresume9100403.mobile_phones 
+  (product_name, manufacturer, product_count, price) 
+VALUES 
+  ('Galaxy S9', 'Samsung', 2, 56000);
+
+INSERT INTO itresume9100403.mobile_phones 
+  (product_name, manufacturer, product_count, price) 
+VALUES 
+  ('Galaxy S8', 'Samsung', 1, 41000);
+
+INSERT INTO itresume9100403.mobile_phones 
+  (product_name, manufacturer, product_count, price) 
+VALUES 
+  ('P20 Pro', 'Huawei', 5, 36000);
+
+SELECT * FROM itresume9100403.mobile_phones;
+
+-- 2
+/*
+¬ыборка мобильных телефонов по количеству
+
+»меетс€ таблица (сущность) с мобильными телефонами mobile_phones.
+” сущности имеютс€ следующие пол€(атрибуты):
+id Ц идентификатор;
+product_name Ц название;
+manufacturer Ц производитель;
+product_count Ц количество;
+price Ц цена.
+Ќеобходимо вывести название, производител€ и цену дл€ мобильных телефонов, у которых количество больше чем 2.
+
+*/
+
+SELECT product_name, manufacturer, price FROM mobile_phones
+WHERE product_count > 2;
+
+-- 3
+/*
+¬ыборка мобильных телефонов производител€ ЂSamsungї
+
+»меетс€ таблица (сущность) с мобильными телефонами mobile_phones.
+” сущности имеютс€ следующие пол€(атрибуты):
+id Ц идентификатор;
+product_name Ц название;
+manufacturer Ц производитель;
+product_count Ц количество;
+price Ц цена.
+Ќеобходимо вывести идентификатор, название, количество и цену дл€ мобильных телефонов, у которых производитель ЂSamsungї.
+*/
+
+SELECT * FROM mobile_phones
+WHERE manufacturer LIKE 'Samsung';

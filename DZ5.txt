@@ -1,0 +1,100 @@
+-- 1
+/*
+Ранжированный список пользователей
+
+Имеется база данных – социальная сеть.
+
+База данных содержит сущности:
+users – пользователи;
+messages – сообщения;
+friend_requests – заявки на дружбу;
+communities – сообщества;
+users_communities – пользователи сообществ;
+media_types – типы медиа;
+media – медиа;
+likes – лайки;
+profiles – профили пользователя.
+
+У сущности «пользователи» имеются следующие поля(атрибуты):
+id – идентификатор;
+firstname – имя;
+lastname - фамилия;
+email - адрес электронной почты.
+
+У сущности «сообщения» имеются следующие поля(атрибуты):
+id – идентификатор;
+from_user_id – отправитель;
+to_user_id – получатель;
+body - содержимое;
+created_at - дата отправки.
+
+Найти количество сообщений, отправленных каждым пользователей.
+В зависимости от количества отправленных сообщений рассчитать ранг пользователей, первое место присвоив пользователю(ям) с наибольшим количеством отправленных сообщений.
+
+Вывести полученный ранг, имя, фамилия, пользователя и кол-во отправленных сообщений. Выводимый список необходимо отсортировать в порядке возрастания ранга.
+*/
+
+SELECT
+ DENSE_RANK() OVER (ORDER BY COUNT(from_user_id) DESC) AS 'rank_message',
+ firstname, lastname,
+ COUNT(from_user_id) AS 'cnt'
+FROM users AS u
+LEFT JOIN messages AS m ON u.id = m.from_user_id
+GROUP BY u.id;
+
+РЕШЕНИЕ ТЕСТА:
+
+SELECT 
+DENSE_RANK() OVER(ORDER BY COUNT(m.id) DESC) AS rank_message,
+u.firstname, 
+u.lastname, 
+COUNT(m.id) AS cnt
+FROM users u 
+LEFT JOIN messages m ON u.id = m.from_user_id
+GROUP BY u.id
+ORDER BY cnt DESC;
+
+-- 2
+/*
+Нахождение разности соседних дат
+
+Имеется база данных – социальная сеть.
+
+База данных содержит сущности:
+users – пользователи;
+messages – сообщения;
+friend_requests – заявки на дружбу;
+communities – сообщества;
+users_communities – пользователи сообществ;
+media_types – типы медиа;
+media – медиа;
+likes – лайки;
+profiles – профили пользователя.
+
+У сущности «сообщения» имеются следующие поля(атрибуты):
+id – идентификатор;
+from_user_id – отправитель;
+to_user_id – получатель;
+body - содержимое;
+created_at - дата отправки.
+
+Получите список сообщений, отсортированных по возрастанию даты отправки.
+Вычислите разность между соседними значениями дат отправки. Разности выразите в минутах.
+
+Выведите идентификатор сообщения, дату отправки, дату отправки следующего сообщения и разницу даты отправки соседних сообщений.
+*/
+
+SELECT id, created_at,
+LEAD(created_at) OVER (PARTITION BY DATE(created_at) ORDER BY created_at) AS lead_time,
+TIMESTAMPDIFF(MINUTE, created_at, LEAD(created_at, 1, 0) OVER (PARTITION BY DATE(created_at) ORDER BY created_at)) AS minute_lead_diff
+FROM messages
+ORDER BY created_at;
+
+РЕШЕНИЕ ТЕСТА:
+
+SELECT 
+id, 
+created_at,
+LEAD(created_at) OVER(ORDER BY created_at) AS lead_time,
+TIMESTAMPDIFF (MINUTE, created_at, LEAD(created_at) OVER(ORDER BY created_at)) AS minute_lead_diff
+FROM messages;
