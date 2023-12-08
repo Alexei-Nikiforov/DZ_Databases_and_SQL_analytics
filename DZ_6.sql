@@ -8,31 +8,30 @@ DELIMITER //
 CREATE PROCEDURE task_1(seconds INT)
 BEGIN
 	DECLARE days INT default 0;
-    DECLARE hours INT default 0;
-    DECLARE minutes INT default 0;
-    
+        DECLARE hours INT default 0;
+        DECLARE minutes INT default 0;
 	CASE
         WHEN seconds BETWEEN 1 AND 59 THEN
-			SET days = 0;
+	    SET days = 0;
             SET hours = 0;
             SET minutes = 0;
-		WHEN seconds BETWEEN 60 AND 3599 THEN
-			SET days = 0;
+	WHEN seconds BETWEEN 60 AND 3599 THEN
+	    SET days = 0;
             SET hours = 0;
             SET minutes = seconds DIV 60;
             SET seconds = seconds MOD 60;
-		WHEN seconds BETWEEN 3600 AND 84599 THEN
-			SET days = 0;
+	WHEN seconds BETWEEN 3600 AND 84599 THEN
+	    SET days = 0;
             SET hours = seconds DIV 3600;
             SET minutes = seconds MOD 3600 DIV 60;
             SET seconds = seconds MOD 86400 MOD 3600 MOD 60;
-		WHEN seconds >= 86400 THEN
-			SET days = seconds DIV 86400;
+	WHEN seconds >= 86400 THEN
+	    SET days = seconds DIV 86400;
             SET hours = seconds MOD 86400 DIV 3600;
             SET minutes = seconds MOD 86400 MOD 3600 DIV 60;
             SET seconds = seconds MOD 86400 MOD 3600 MOD 60;
-		ELSE
-			SELECT "Некорректное число";
+	ELSE
+	    SELECT "Некорректное число";
 	END CASE;
 	SELECT days, hours, minutes, seconds;
 END //
